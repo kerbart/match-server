@@ -13,13 +13,10 @@
 		<property name="ignoreUnresolvablePlaceholders" value="true"/>
 		<property name="locations">
 			<list>
-				<value>classpath:/application-checkpoint.properties</value>
-				
+				<value>classpath:/application-match.properties</value>	
 			</list>
 		</property>
 	</bean>
-
 	<context:annotation-config/>
 	<context:component-scan base-package="com.kerbart"/>
-
 </beans>

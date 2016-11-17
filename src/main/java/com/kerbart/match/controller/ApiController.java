@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -36,6 +37,23 @@ public class ApiController {
 
 	@Inject
 	PrenomService prenomService;
+	
+
+	 @Value("${database.driver}")
+   String databaseDriver;
+
+   @Value("${database.url}")
+   String databaseUrl;
+
+   @Value("${database.login}")
+   String databaseLogin;
+   
+   @Value("${hibernate.dialect}")
+   String hibernateDialiect;
+   
+   @Value("${hibernate.hbm2ddl.auto}")
+   String hibernateHbm2ddlAuto;
+
 	
 	@ApiOperation(value = "Generate random firstname")
 	@RequestMapping(value = "/firstname/random", produces = "application/json", method = RequestMethod.GET)
@@ -76,7 +94,18 @@ public class ApiController {
 		return new ResponseEntity<MatchResponse>(response, HttpStatus.OK);
 	}
 	
-	
+	@ApiOperation(value = "Status")
+	@RequestMapping(value = "/status", produces = "application/json", method = RequestMethod.GET)
+	@CrossOrigin(origins = "*")
+	public ResponseEntity<String> status() {
+		
+		return new ResponseEntity<String>(  "databaseDriver" + databaseDriver + "\n"
+	    		+ "databaseUrl=" + databaseUrl + "\n"
+	    		+ "databaseLogin=" + databaseLogin + "\n"
+	    		+ "hibernateDialiect=" + hibernateDialiect + "\n"
+	    		+ "hibernateHbm2ddlAuto=" + hibernateHbm2ddlAuto + "\n"
+	, HttpStatus.OK);
+	}
 	
 	@ApiOperation(value = "Generate random firstname for girl")
 	@RequestMapping(value = "/firstname/random/girl", produces = "application/json", method = RequestMethod.GET)
