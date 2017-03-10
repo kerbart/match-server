@@ -80,6 +80,7 @@ public class DatabaseConfiguration {
         properties.setProperty("hibernate.hbm2ddl.auto", hibernateHbm2ddlAuto);
         properties.setProperty("hibernate.show_sql", "true");
         properties.setProperty("hibernate.dialect", hibernateDialiect);
+        properties.setProperty("hibernate.jdbc.batch_size", "100");
         return properties;
     }
 }

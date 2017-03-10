@@ -2,31 +2,31 @@ package com.kerbart.match.controller.responses;
 
 import java.util.List;
 
-import com.kerbart.match.model.FirstName;
+import com.kerbart.match.model.PrenomMetaData;
 
 public class MatchResponse {
 
-	FirstName firstName;
+	PrenomMetaData firstName;
 	
-	List<FirstName> firstNames;
+	List<PrenomMetaData> firstNames;
 	
     public MatchResponse() {
 
     }
 
-	public FirstName getFirstName() {
+	public PrenomMetaData getFirstName() {
 		return firstName;
 	}
 
-	public void setFirstName(FirstName firstName) {
+	public void setFirstName(PrenomMetaData firstName) {
 		this.firstName = firstName;
 	}
 
-	public List<FirstName> getFirstNames() {
+	public List<PrenomMetaData> getFirstNames() {
 		return firstNames;
 	}
 
-	public void setFirstNames(List<FirstName> firstNames) {
+	public void setFirstNames(List<PrenomMetaData> firstNames) {
 		this.firstNames = firstNames;
 	}
 	

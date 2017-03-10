@@ -1,5 +1,5 @@
 {
-  "name": "nusseo-front",
+  "name": "match-server",
   "version": "0.0.1",
   "description": "Nusseo Frontend",
   "main": "bundle.js",

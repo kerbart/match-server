@@ -335,7 +335,7 @@ this["Handlebars"]["templates"]["main"] = Handlebars.template({"1":function(dept
     + "\" data-sw-translate>Terms of service</a></div>";
 },"6":function(depth0,helpers,partials,data) {
   var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression;
-  return "<div class='info_name' data-sw-translate> Nusseo</div>";
+    return "<div class='info_name' data-sw-translate> Match API</div>";
 },"8":function(depth0,helpers,partials,data) {
   var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression;
   return "<div class='info_url' data-sw-translate>See more at <a href=\""

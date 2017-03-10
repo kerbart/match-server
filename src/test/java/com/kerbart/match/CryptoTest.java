@@ -27,38 +27,6 @@ import com.kerbart.match.spring.AppConfiguration;
 @WebAppConfiguration
 public class CryptoTest {
 
-    @Test
-    public void shouldEncryptAndDecryptDocument() {
-        String originalContent = "my content is good ok !!!! \n yes !";
-        String key = RandomStringUtils.randomAlphanumeric(16);
-        File inputFile = new File("document.txt");
-        try {
-            IOUtils.write(originalContent, new FileOutputStream(inputFile));
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
 
-        File encryptedFile = new File("document.encrypted");
-        File decryptedFile = new File("document.decrypted");
-
-        try {
-            CryptoUtils.encrypt(key, inputFile, encryptedFile);
-            CryptoUtils.decrypt(key, encryptedFile, decryptedFile);
-
-            String descrytedContent = FileUtils.readFileToString(decryptedFile);
-            System.out.println(descrytedContent);
-            assertEquals(originalContent, descrytedContent);
-        } catch (CryptoException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 
 }
