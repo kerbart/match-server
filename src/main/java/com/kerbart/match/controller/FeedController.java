@@ -1,13 +1,7 @@
 package com.kerbart.match.controller;
 
-import com.kerbart.match.controller.responses.LikeResponse;
-import com.kerbart.match.controller.responses.LikesResponse;
 import com.kerbart.match.controller.responses.MatchResponse;
-import com.kerbart.match.controller.responses.UserResponse;
-import com.kerbart.match.model.Like;
 import com.kerbart.match.model.Prenom;
-import com.kerbart.match.model.PrenomAge;
-import com.kerbart.match.model.User;
 import com.kerbart.match.repositories.LikeRepository;
 import com.kerbart.match.repositories.PrenomMetaDataRepository;
 import com.kerbart.match.repositories.PrenomRepository;
@@ -29,7 +23,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -219,50 +212,6 @@ public class FeedController {
 
 
 
-
-
-/*
-	@ApiOperation(value = "Feed From CSV")
-	@RequestMapping(value = "/feed", produces = "application/json", method = RequestMethod.GET)
-	@CrossOrigin(origins = "*")
-	public ResponseEntity<Long> feed() {
-		MatchResponse response = new MatchResponse();
-		Long numberInserted = 0L;
-		try {
-			ClassLoader classLoader = getClass().getClassLoader();
-			File file = new File(classLoader.getResource("Prenoms-UTF8.csv").getFile());
-
-			List<String> lines= FileUtils.readLines(file);
-
-			for (String line : lines) {
-				String[] attributes = line.split(";");
-				PrenomMetaData prenom = new PrenomMetaData();
-				// m;croatian;0
-				try {
-					prenom.setPrenom(attributes[0]);
-					prenom.setPrenomNoAccent(StringUtils.stripAccents(attributes[0]).toUpperCase());
-					prenom.setPrenomLength(new Long(prenom.getPrenom().length()));
-					prenom.setComposedPrenom(prenom.getPrenom().indexOf(" ") > -1);
-					prenom.setGenre(attributes[1]);
-					prenom.setLangage(attributes[2]);
-					prenom.setFrequence(new Double(attributes[3]));
-					prenom = firstnameService.create(prenom);
-					System.out.println(numberInserted + " " + prenom);
-					numberInserted++;
-				} catch (NumberFormatException e) {
-
-				}
-			}
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return new ResponseEntity<Long>(numberInserted, HttpStatus.OK);
-	}
-*/
-
 	@ApiOperation(value = "Feed Occurence From CSV")
 	@RequestMapping(value = "/feed/occurence", produces = "application/json", method = RequestMethod.GET)
 	@CrossOrigin(origins = "*")
@@ -297,6 +246,7 @@ public class FeedController {
 				String prenom = key;
 				prenomService.addPrenomAndOccurence(prenom, tree.get(prenom));
 			}
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

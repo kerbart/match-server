@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -100,7 +101,7 @@ public class PrenomService {
 			originesList.add("FRANCE");
 		}
 
-		String query = "  SELECT DISTINCT prenomoccurence.prenom_id, prenom.prenom, prenom.token, sum(nombre) as total\n" +
+		String query = "  SELECT DISTINCT prenomoccurence.prenom_id, prenom.prenom, prenom.token, prenom.masculin, prenom.feminin, sum(nombre) as total\n" +
 				"    FROM prenomoccurence, prenom, prenomorigine " +
 				"    WHERE annee > ?1  and annee < ?2 " +
 				"    and prenom.id = prenomoccurence.prenom_id ";
@@ -115,7 +116,7 @@ public class PrenomService {
 		query += "    and prenomorigine.prenom = prenom.prenomsansaccent " +
 				"    and prenomorigine.origine IN (?3) " +
 				"    and prenom.id not in (select prenom_id from likes where user_id = ?4) " +
-				"    group by prenomoccurence.prenom_id, prenom.prenom,  prenom.token " +
+				"    group by prenomoccurence.prenom_id, prenom.prenom, prenom.masculin, prenom.feminin, prenom.token " +
 				"    order by total DESC " +
 				"    limit ?5 ";
 
@@ -134,8 +135,11 @@ public class PrenomService {
 			Prenom prenom = new Prenom();
 			prenom.setId(((BigInteger) result[0]).longValue());
 			prenom.setPrenom((String) result[1]);
+			prenom.setMasculin((Boolean) result[3]);
+			prenom.setFeminin((Boolean) result[4]);
 			prenom.setToken((String) result[2]);
-			prenom.setTotalOccurences(Math.round((Double) result[3]));
+			prenom.setTotalOccurences(((BigDecimal) result[5]).longValue());
+
 			prenoms.add(prenom);
 		}
 
@@ -173,6 +177,7 @@ public class PrenomService {
 		prenom.setTotalOccurencesFeminin(0L);
 		em.persist(prenom);
 
+		Long bestNombre = 0L;
 		for (HashMap<String, String> occurenceMap : occurences) {
 			Date dateAnnee = new Date();
 			try {
@@ -192,6 +197,10 @@ public class PrenomService {
 			prenom.setTotalOccurencesFeminin(prenom.getTotalOccurencesFeminin() + (occurence.getFeminin() ? occurence.getNombre() : 0L));
 			prenom.setMasculin(occurence.getMasculin() || prenom.getMasculin());
 			prenom.setFeminin(occurence.getFeminin() || prenom.getFeminin());
+			if (occurence.getNombre() > bestNombre) {
+				bestNombre = occurence.getNombre();
+				prenom.setMeilleurDate(dateAnnee);
+			}
 		}
 		// false positive for gender
 		if (prenom.getTotalOccurencesMasculin().doubleValue() / prenom.getTotalOccurences().doubleValue() < 0.05) {

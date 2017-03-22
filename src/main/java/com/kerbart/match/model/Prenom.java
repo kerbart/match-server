@@ -2,9 +2,9 @@ package com.kerbart.match.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -44,6 +44,10 @@ public class Prenom {
 
     @Column
     Boolean feminin;
+
+    @Column
+    @Temporal(TemporalType.DATE)
+    Date meilleurDate;
 
     @Column
     Boolean metaDataExists;
@@ -150,6 +154,14 @@ public class Prenom {
 
     public void setMetaDataExists(Boolean metaDataExists) {
         this.metaDataExists = metaDataExists;
+    }
+
+    public Date getMeilleurDate() {
+        return meilleurDate;
+    }
+
+    public void setMeilleurDate(Date meilleurDate) {
+        this.meilleurDate = meilleurDate;
     }
 
     @Override
