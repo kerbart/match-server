@@ -27,7 +27,7 @@ public class PrenomService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(PrenomService.class);
 
-	@Value("${hibernate.jdbc.batch_size}")
+	@Value("${hibernate.jdbc.batch_size:100}")
 	private int batchSize;
 
 	final private static DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.FRENCH);
